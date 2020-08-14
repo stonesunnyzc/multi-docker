@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t congcong/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run congcong/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t congcong/multi-client ./client
+  - docker build -t congcong/multi-nginx ./nginx
+  - docker build -t congcong/multi-server ./server
+  - docker build -t congcong/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #Take those images and push them to docker hub
+  - docker push congcong/multi-client
+  - docker push congcong/multi-nginx
+  - docker push congcong/multi-server
+  - docker push congcong/multi-worker
