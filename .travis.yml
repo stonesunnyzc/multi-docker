@@ -9,14 +9,14 @@ script:
   - docker run -e CI=true congcong/react-test npm run test
 
 after_success:
-  - docker build -t congcong/multi-client ./client
-  - docker build -t congcong/multi-nginx ./nginx
-  - docker build -t congcong/multi-server ./server
-  - docker build -t congcong/multi-worker ./worker
+  - docker build -t stonesunnyzc/multi-client ./client
+  - docker build -t stonesunnyzc/multi-nginx ./nginx
+  - docker build -t stonesunnyzc/multi-server ./server
+  - docker build -t stonesunnyzc/multi-worker ./worker
   # Log in to the docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin docker.io
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   #Take those images and push them to docker hub
-  - docker push congcong/multi-client
-  - docker push congcong/multi-nginx
-  - docker push congcong/multi-server
-  - docker push congcong/multi-worker
+  - docker push stonesunnyzc/multi-client
+  - docker push stonesunnyzc/multi-nginx
+  - docker push stonesunnyzc/multi-server
+  - docker push stonesunnyzc/multi-worker
